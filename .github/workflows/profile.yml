@@ -1,0 +1,49 @@
+name: Profile cards
+
+on:
+  schedule:
+    - cron: "23 4 * * *"   # every day at 04:23 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - profile.toml
+      - .github/scripts/**
+      - .github/workflows/profile.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-cards
+  cancel-in-progress: true
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Draw the cards
+        run: python .github/scripts/build_cards.py --login "${{ github.repository_owner }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Draw the contribution snake
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            assets/snake-light.svg?color_snake=#bf8700&color_dots=#ebeef1,#b5e4da,#6fcab9,#2ea592,#1a6f63
+            assets/snake-dark.svg?palette=github-dark&color_snake=#e3b341&color_dots=#1b222b,#0f4a46,#127066,#22a593,#58e0c8
+
+      - name: Commit the new cards
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets
+          git diff --cached --quiet || (git commit -m "Redraw profile cards" && git push)
