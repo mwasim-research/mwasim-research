@@ -1,0 +1,41 @@
+# Text for the profile's cards. Edit and push: the "Profile cards" workflow redraws assets/ within a minute or two.
+
+[profile]
+name = "Muhammad Wasim"
+overline = "Researcher · Graph learning"
+tagline = "Graph neural networks, knowledge graphs and language models"
+chips = ["Knowledge graph completion", "GNN transfer learning", "Reproducible ML"]
+
+[toolbox]
+items = ["Python", "PyTorch", "DGL", "Hugging Face", "NumPy", "pandas", "GitHub Actions", "Bash"]
+
+# Research timeline: date (YYYY-MM), title, detail, kind = paper | code | teaching
+[[timeline]]
+date = "2024-10"
+title = "SG-XNet submitted"
+detail = "PeerJ Computer Science"
+kind = "paper"
+
+[[timeline]]
+date = "2026-01"
+title = "GNN mini-challenge"
+detail = "Citation graphs with DGL"
+kind = "teaching"
+
+[[timeline]]
+date = "2026-02"
+title = "GNN competition template"
+detail = "Humans and LLMs, one leaderboard"
+kind = "code"
+
+[[timeline]]
+date = "2026-05"
+title = "SG-XNet v2 released"
+detail = "Controlled re-evaluation"
+kind = "code"
+
+[[timeline]]
+date = "2026-07"
+title = "KGC mechanisms study"
+detail = "IEEE Access, under review"
+kind = "paper"
